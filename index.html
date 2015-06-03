@@ -85,32 +85,33 @@
         // object literals are created using 
         // var o = {} rather than var o = new Object();
         // var a = [] rather than var a = new Array();
- var log = "";
+        var log = "";
+
+        function logThis(_coffee) {
+            log += _coffee.name() + " = $" + _coffee.cost() + "<br/>";
+            console.log(log);
+        };
 
         (function () {
 
-           
+
+
             var coffee = new Beverage("Columbian");
-            
-            log += coffee.name() + " = $" + coffee.cost() + "<br/>";
-            console.log(log);
-            
+            logThis(coffee);
+
             // add mocha
             addMocha(coffee);
-            log += coffee.name() + " = $" + coffee.cost() + "<br/>";
-            console.log(log);
-            
+            logThis(coffee);
+
             // add whip
             addWhip(coffee);
-            log += coffee.name() + " = $" + coffee.cost() + "<br/>";
-            console.log(log);
-            
+            logThis(coffee);
+
             // add upsize
             addSuperSize(coffee);
-            log += coffee.name() + " = $" + coffee.cost() + "<br/>";
-            console.log(log);
-            
-            
+            logThis(coffee);
+
+
             $("#log").html(log);
 
             $("button").click(function () {
