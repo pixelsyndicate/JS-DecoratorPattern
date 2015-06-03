@@ -1,7 +1,7 @@
-function Beverage(name) {
+function Beverage(name,price) {
     this._name = name || 'Dark Roast';
     this.cost = function () {
-        return 0.99;
+        return price || 0.89;
     };
     this.name = function () {
         return this._name;
@@ -11,39 +11,51 @@ function Beverage(name) {
 /*Decorator 1*/
 function addMocha(beverage) {
     // has-a 
-    var previousCost = beverage.cost();
+    var addOnName = " / with Mocha";
+    var previousBeverage = beverage;
+    var previousCost = previousBeverage.cost();
     beverage.cost = function () {
         return previousCost + 0.20;
     }
-    var previousName = beverage.name();
+    var previousName = previousBeverage.name();
     beverage.name = function () {
-        return previousName + " / with Mocha";
+        return previousName + addOnName;
     };
 }
 
 /*Decorator 2*/
 function addWhip(beverage) {
     // has-a 
-    var previousCost = beverage.cost();
+    var previousBeverage = beverage;
 
+    // additional features
+    var addOnCost = 0.10;
+    var addOnName = " / with Whip";
+
+    // change the beverage
+    var previousCost = previousBeverage.cost();
     beverage.cost = function () {
-        return previousCost + 0.10;
+        return (previousCost + addOnCost);
     };
-    var previousName = beverage.name();
+    var previousName = previousBeverage.name();
     beverage.name = function () {
-        return previousName + " / with Whip";
+        return previousName + addOnName;
     };
 }
 
 /*Decorator 3*/
 function addSuperSize(beverage) {
-    var previousCost = beverage.cost();
+    var addOnName = " / with UpSize";
+    var previousBeverage = beverage;
+    var previousCost = previousBeverage.cost();
+
+    // adjust the beverage
     beverage.cost = function () {
-        return previousCost + 1.00;
+        return previousCost + 0.99;
     };
-    var previousName = beverage.name();
+    var previousName = previousBeverage.name();
     beverage.name = function () {
-        return previousName + " / with Up Size";
+        return previousName + addOnName;
     };
 }
 

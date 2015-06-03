@@ -59,95 +59,185 @@
                 padding: 40px 15px;
                 text-align: center;
             }
+
+            .highlight pre code:first-child {
+                display: inline-block;
+                padding-right: 45px;
+            }
+
+            .highlight pre code {
+                font-size: inherit;
+                color: #333;
+            }
         </style>
         <div class="starter-template">
             <h1>The Decorator Pattern (javascript)</h1>
             <p class="lead">This project demonstrates the Decorator Pattern.
                 <br> <small>By extending functionality to existing classes, we uphold the S<u>O</u>LiD principle of Open for Extension/Closed for modification.</small>
             </p>
+
+
+
         </div>
-<button id="mocha">Add Mocha</button> <button id="whip">Add Whip</button> <button id="upsize">Up-Size Me</button>
-        <div id="demo" class="displayInfo">Display Price Here</div>
-        <button id="total">How Much?</button>
-        <div id="log" class="well well-sm" title="Receipt">console.log</div>
-    </div>
-    <!-- /.container -->
+
+        <label>Base Beverage Class</label>
+        <Br />
+        <div class="highlight">
+            <pre>
+// our beverage class holds a default name and default price
+function Beverage(name,price) {
+    this._name = name || 'Dark Roast';
+    this.cost = function () {
+        return price || 0.89;
+    };
+    this.name = function () {
+        return this._name;
+    };
+}
+
+// instantiate a base-coffee object
+var coffee = new Beverage();
+
+// to create a breakfast blend...
+coffee = new Beverage("Breakfast Blend",0.79);
+
+// to add Mocha, pass in the original beverage
+function addMocha(beverage) {
+    // HAS-A --  add the additional price to the previous cost
+    var previousCost = beverage.cost();
+    beverage.cost = function () {
+        return previousCost + 0.20;
+    }
+    // add the upcharge item name to the name of the beverage
+    var previousName = beverage.name();
+    beverage.name = function () {
+        return previousName + " / with Mocha";
+    };
+}
+</pre>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="col-sm-8">
+                <label>Choose Coffee</label>
+                <br/>
+                <button id="columbian">Columbian 89&cent;</button>
+                <button id="darkroast">Dark Roast 99&cent;</button>
+                <button id="breakfastblend">Breakfast Blend 79&cent;</button>
+                <hr/>
+                <label>Add Extras</label>
+                <br />
+                <button id="mocha">Add Mocha (+ 20&cent;)</button>
+                <button id="whip">Add Whip (+ 10&cent;)</button>
+                <button id="upsize">Up-Size Me (+ 99&cent;)</button>
+
+                <hr />
+                <div id="demo" class="displayInfo">Display Price Here</div>
+            <button id="total">How Much?</button>
+            </div>
+            <div class="col-sm-4">
+                <label>Receipt</label>
+                <br/>
+                <div id="log" class="well well-sm" title="Receipt">console.log</div>
+            </div>
+        </div>
+        <br />
+        <hr/>
+        <div class="col-sm-12">
 
 
-    <!-- Bootstrap core JavaScript
+
+        </div>
+        <br>
+        <!-- /.container -->
+
+        <!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="beverage.js"></script>
-    <script type="text/javascript">
-        // object literals are created using 
-        // var o = {} rather than var o = new Object();
-        // var a = [] rather than var a = new Array();
-        var log = "";
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="beverage.js"></script>
+        <script type="text/javascript">
+            // object literals are created using
+            // var o = {} rather than var o = new Object();
+            // var a = [] rather than var a = new Array();
+            var log = "";
 
-        function logThis(_coffee) {
-            log += _coffee.name() + " = $" + _coffee.cost() + "<br/>";
-            console.log(log);
-            $("#log").html(log);
-        };
+            function logThis(_coffee) {
+                log += _coffee.name() + " = $" + _coffee.cost() + "<br/>";
+                console.log(log);
+                $("#log").html(log);
+            };
 
-        (function () {
+            function clearLog() {
+                log = "";
+                console.log("clearing log");
+                $("#log").html("");
+            };
 
+            (function () {
 
+                var coffee = new Beverage();
+                logThis(coffee);
 
-            var coffee = new Beverage("Columbian");
-            logThis(coffee);
-
-            // add mocha
-           // addMocha(coffee);
-            //logThis(coffee);
-
-            // add whip
-            //addWhip(coffee);
-            //logThis(coffee);
-
-            // add upsize
-           // addSuperSize(coffee);
-            //logThis(coffee);
-
-
-            $("#log").html(log);
-
-            $("button#mocha").click(function () {
-                //$("#mocha").addClass('hidden');
-                addMocha(coffee);
-            logThis(coffee);
-            });
-
-            $("button#whip").click(function () {
-                //$("#whip").addClass('hidden');
-                 addWhip(coffee);
-            logThis(coffee);
-            });
-
-            $("button#upsize").click(function () {
-                  //$("#upsize").addClass('hidden');
-                 addSuperSize(coffee);
-            logThis(coffee);
-            });
+                $("button#columbian").click(function () {
+                    //$("#mocha").addClass('hidden');
+                    clearLog();
+                    coffee = new Beverage("Columbian", 0.89);
+                    logThis(coffee);
+                });
+                $("button#darkroast").click(function () {
+                    //$("#mocha").addClass('hidden');
+                    clearLog();
+                    coffee = new Beverage("Dark Roast", 0.99);
+                    logThis(coffee);
+                });
+                $("button#breakfastblend").click(function () {
+                    //$("#mocha").addClass('hidden');
+                    clearLog();
+                    coffee = new Beverage("Breakfast Blend", 0.79);
+                    logThis(coffee);
+                });
 
 
-            $("button#total").click(function () {
+                $("button#mocha").click(function () {
+                    //$("#mocha").addClass('hidden');
+                    $(".displayInfo").html("");
+                    addMocha(coffee);
+                    logThis(coffee);
+                });
 
-                // onclick='getElementById("demo").innerHTML=darkRoast.getInfo()'
-                //this.innerHTML = darkRoast.getInfo();
-                //$(".displayInfo").html(Date());
-                //  $(".displayInfo").html(cat.getDesc());
+                $("button#whip").click(function () {
+                    //$("#whip").addClass('hidden');
+                    $(".displayInfo").html("");
+                    addWhip(coffee);
 
-                //$(".displayInfo").html(darkRoast.getDesc());
-                // $(".displayInfo").html(withMocha.getDesc());
-                $(".displayInfo").html(" for " + coffee.name() + " you will pay $" + coffee.cost());
-            });
+                    logThis(coffee);
+                });
 
-        })();
-    </script>
+                $("button#upsize").click(function () {
+                    //$("#upsize").addClass('hidden');
+                    $(".displayInfo").html("");
+                    addSuperSize(coffee);
+                    logThis(coffee);
+                });
+
+
+                $("button#total").click(function () {
+
+                    // onclick='getElementById("demo").innerHTML=darkRoast.getInfo()'
+                    //this.innerHTML = darkRoast.getInfo();
+                    //$(".displayInfo").html(Date());
+                    //  $(".displayInfo").html(cat.getDesc());
+
+                    //$(".displayInfo").html(darkRoast.getDesc());
+                    // $(".displayInfo").html(withMocha.getDesc());
+                    $(".displayInfo").html(" for " + coffee.name() + " you will pay $" + coffee.cost()).addClass("well");
+                });
+
+            })();
+        </script>
 </body>
 
 </html>
