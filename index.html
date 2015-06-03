@@ -66,9 +66,9 @@
                 <br> <small>By extending functionality to existing classes, we uphold the S<u>O</u>LiD principle of Open for Extension/Closed for modification.</small>
             </p>
         </div>
-
+<button id="mocha">Add Mocha</button> <button id="whip">Add Whip</button> <button id="upsize">Up-Size Me</button>
         <div id="demo" class="displayInfo">Display Price Here</div>
-        <button>How Much?</button>
+        <button id="total">How Much?</button>
         <div id="log" class="well well-sm" title="Receipt">console.log</div>
     </div>
     <!-- /.container -->
@@ -90,6 +90,7 @@
         function logThis(_coffee) {
             log += _coffee.name() + " = $" + _coffee.cost() + "<br/>";
             console.log(log);
+            $("#log").html(log);
         };
 
         (function () {
@@ -100,21 +101,40 @@
             logThis(coffee);
 
             // add mocha
-            addMocha(coffee);
-            logThis(coffee);
+           // addMocha(coffee);
+            //logThis(coffee);
 
             // add whip
-            addWhip(coffee);
-            logThis(coffee);
+            //addWhip(coffee);
+            //logThis(coffee);
 
             // add upsize
-            addSuperSize(coffee);
-            logThis(coffee);
+           // addSuperSize(coffee);
+            //logThis(coffee);
 
 
             $("#log").html(log);
 
-            $("button").click(function () {
+            $("button#mocha").click(function () {
+                //$("#mocha").addClass('hidden');
+                addMocha(coffee);
+            logThis(coffee);
+            });
+
+            $("button#whip").click(function () {
+                //$("#whip").addClass('hidden');
+                 addWhip(coffee);
+            logThis(coffee);
+            });
+
+            $("button#upsize").click(function () {
+                  //$("#upsize").addClass('hidden');
+                 addSuperSize(coffee);
+            logThis(coffee);
+            });
+
+
+            $("button#total").click(function () {
 
                 // onclick='getElementById("demo").innerHTML=darkRoast.getInfo()'
                 //this.innerHTML = darkRoast.getInfo();
